@@ -3,9 +3,10 @@ import { toast, ToastContainer } from "react-toastify";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import ScrollReveal from "scrollreveal";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { Home } from "./component/home/home";
 import { NotFound } from "./component/404-not-found/NotFound";
+import HomePage from "./pages/HomePage";
 function App() {
   const navigate = useNavigate();
   const roles = localStorage.getItem("roles");
@@ -22,43 +23,30 @@ function App() {
     if (checkTokenExpiration() && window.location.pathname === "/login") {
       toast.warning("Bạn đã đăng nhập!", { autoClose: 1000 });
       setTimeout(() => {
-        navigate('/');
-      }, 1500)
+        navigate("/");
+      }, 1500);
     }
   }, [roles]);
   useEffect(() => {
     const sr = ScrollReveal({
-      distance: '60px',
+      distance: "60px",
       duration: 2500,
       delay: 400,
     });
 
     sr.reveal(`.footer .row`, {
-      origin: 'left',
+      origin: "left",
       interval: 100,
     });
   }, []);
   return (
     <>
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        {
-          !roles ? (
-            ""
-          ) : roles.includes('ROLE_ADMIN') ? (
-            <>
-              <Route path="/" element={<Home />}></Route>
-            </>
-          ) : (
-            <>
-              <Route path="/" element={<NotFound />}></Route>
-            </>
-          )
-        }
+        <Route path="" element={<HomePage></HomePage>}></Route>
       </Routes>
       <ToastContainer />
     </>
-  )
+  );
 }
 
 export default App;
