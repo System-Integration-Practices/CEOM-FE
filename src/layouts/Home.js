@@ -12,7 +12,9 @@ const Home = () => {
       </div>
       <div className="home__content">
         <Header className="home__header"></Header>
-        <Outlet></Outlet>
+        <div className="home__outlet">
+          <Outlet></Outlet>
+        </div>
       </div>
     </div>
   );
