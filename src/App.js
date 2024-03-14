@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import ScrollReveal from "scrollreveal";
 import "react-toastify/dist/ReactToastify.css";
-import { Home } from "./component/home/home";
+import Home from "./layouts/Home";
 import { NotFound } from "./component/404-not-found/NotFound";
 import HomePage from "./pages/HomePage";
 function App() {
@@ -42,7 +42,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="" element={<HomePage></HomePage>}></Route>
+        <Route element={<Home></Home>}>
+          <Route path="" element={<HomePage></HomePage>}></Route>
+        </Route>
       </Routes>
       <ToastContainer />
     </>

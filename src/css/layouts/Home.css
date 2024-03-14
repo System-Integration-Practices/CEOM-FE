@@ -1,0 +1,23 @@
+:root {
+  --width-sidebar: 5vw;
+  --height: 60px;
+}
+
+.home__container {
+  display: flex;
+}
+
+.home__sidebar {
+  width: var(--width-sidebar);
+  height: var(--height);
+  border-bottom: 1px solid #00000010;
+}
+
+.home__content {
+  width: calc(100vw - var(--width-sidebar));
+}
+
+.home__header {
+  height: var(--height);
+  border-bottom: 1px solid #00000010;
+}
