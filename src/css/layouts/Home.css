@@ -5,13 +5,14 @@
 
 .home__container {
   display: flex;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   height: 100%;
+  align-items: stretch;
 }
 
 .home__sidebar {
   width: var(--width-sidebar);
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .home__sidebar-menu {
@@ -21,7 +22,7 @@
 
 .home__content {
   width: calc(100vw - var(--width-sidebar));
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .home__header {
@@ -31,5 +32,5 @@
 
 .home__outlet {
   background-color: #f5f6f8;
-  height: calc(100vh - var(--height));
+  min-height: calc(100vh - var(--height));
 }

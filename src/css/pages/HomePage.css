@@ -63,6 +63,8 @@
 
 .view__table {
   background-color: #fff;
+  padding: 30px;
+  border-radius: 0 10px 10px 10px;
 }
 
 .view__table-view {
