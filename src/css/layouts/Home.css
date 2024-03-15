@@ -6,6 +6,7 @@
 .home__container {
   display: flex;
   min-height: 100vh;
+  height: 100%;
 }
 
 .home__sidebar {

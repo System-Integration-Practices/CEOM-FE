@@ -60,3 +60,31 @@
   color: #4f65df;
   background-color: #fff;
 }
+
+.view__table {
+  background-color: #fff;
+}
+
+.view__table-view {
+  margin-bottom: 20px;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid #dfe0eb;
+  height: 80px;
+  place-items: center;
+}
+
+th {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #9fa2b4;
+}
+
+td {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #252733;
+}

@@ -1,0 +1,17 @@
+.pagination {
+  @apply flex items-center justify-end gap-8;
+  .previous.disabled,
+  .next.disabled {
+    opacity: 0.5;
+    /* visibility: hidden; */
+    pointer-events: none;
+  }
+
+  & > li {
+    @apply text-body-4 text-black-40;
+    user-select: none;
+  }
+  & > .selected {
+    @apply text-primary;
+  }
+}

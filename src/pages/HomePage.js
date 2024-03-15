@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/pages/HomePage.css";
+import Pagination from "../components/Pagination";
 
 const HomePage = () => {
   return (
@@ -29,7 +30,81 @@ const HomePage = () => {
         <button className="view__button">Benefits</button>
       </div>
       <div className="view__table">
-        <form action="" className="view__table-form"></form>
+        <form action="" className="view__table-form">
+          <div className="view__table-group">
+            <input type="text" className="view__table-input" />
+            <button className="view__table-button"></button>
+          </div>
+          <table className="view__table-view">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Shareholder</th>
+                <th>Gender</th>
+                <th>Type</th>
+                <th>
+                  Total Earnings <span>(last year)</span>
+                </th>
+                <th>
+                  Total Earnings <span>(present)</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nguyen Van A</td>
+                <td>Maketing</td>
+                <td>True</td>
+                <td>Male</td>
+                <td>Full-time</td>
+                <td>100 000 USD</td>
+                <td>35 000 USD</td>
+              </tr>
+              <tr>
+                <td>Nguyen Van A</td>
+                <td>Maketing</td>
+                <td>True</td>
+                <td>Male</td>
+                <td>Full-time</td>
+                <td>100 000 USD</td>
+                <td>35 000 USD</td>
+              </tr>
+              <tr>
+                <td>Nguyen Van A</td>
+                <td>Maketing</td>
+                <td>True</td>
+                <td>Male</td>
+                <td>Full-time</td>
+                <td>100 000 USD</td>
+                <td>35 000 USD</td>
+              </tr>
+              <tr>
+                <td>Nguyen Van A</td>
+                <td>Maketing</td>
+                <td>True</td>
+                <td>Male</td>
+                <td>Full-time</td>
+                <td>100 000 USD</td>
+                <td>35 000 USD</td>
+              </tr>
+              <tr>
+                <td>Nguyen Van A</td>
+                <td>Maketing</td>
+                <td>True</td>
+                <td>Male</td>
+                <td>Full-time</td>
+                <td>100 000 USD</td>
+                <td>35 000 USD</td>
+              </tr>
+            </tbody>
+          </table>
+          <Pagination
+            itemsPerPage={5}
+            setCurrentPage={1}
+            totalPages={100}
+          ></Pagination>
+        </form>
       </div>
     </div>
   );
