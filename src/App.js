@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./layouts/Home";
 import { NotFound } from "./component/404-not-found/NotFound";
 import HomePage from "./pages/HomePage";
+import UserProfile from "./pages/UserProfile";
+
 function App() {
   const navigate = useNavigate();
   const roles = localStorage.getItem("roles");
@@ -44,6 +46,10 @@ function App() {
       <Routes>
         <Route element={<Home></Home>}>
           <Route path="" element={<HomePage></HomePage>}></Route>
+          <Route
+            path="/user-profile"
+            element={<UserProfile></UserProfile>}
+          ></Route>
         </Route>
       </Routes>
       <ToastContainer />
