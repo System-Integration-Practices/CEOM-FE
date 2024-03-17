@@ -1,63 +1,26 @@
-.manage__main--content {
-    position: relative;
-    background: #ebe9e9;
-    width: 100%;
-    padding: 1rem;
-}
-
-.manage__header--wrapper img {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.manage__header--wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-}
-
-.manage__header--title {
-    color: rgba(113, 99, 186, 255);
-}
-
-.manage__user--info {
-    display: flex;
-    justify-items: center;
-    gap: 1rem;
-}
-
-.manage__search--box {
-    background: rgb(237, 237, 237);
-    border-radius: 15px;
-    color: rgba(133, 99, 186, 255);
+.manage__buttons {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 12px;
-}
-
-.manage__search--box input {
-    background: transparent;
+    gap: 10px;
+  }
+  
+  .manage__button {
+    width: 120px;
+    outline: none;
+    border: none;
     padding: 10px;
-}
-
-.manage__search--box i{
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.5s ease-out;
-}
-
-.manage__search--box i:hover {
-    transform: scale(1.2);
-}
-
+    background-color: #cdcdcd;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
+  .manage__button.active {
+    color: #4f65df;
+    background-color: #fff;
+  }
+  
 
 /* tabular section */
 .manage__tabular--wrapper {
@@ -82,8 +45,9 @@ thead {
 }
 
 th {
-    padding: 15px;
+    padding: 10px;
     text-align: left;
+    text-align: center;
 }
 
 tbody{
@@ -110,8 +74,4 @@ tfoot td {
     padding: 15px;
 }
 
-.manage__table-container button {
-    color: green;
-    background: none;
-    cursor: pointer;
-}
+

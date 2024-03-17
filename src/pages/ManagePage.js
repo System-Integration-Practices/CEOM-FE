@@ -3,30 +3,25 @@ import "../css/pages/ManagePage.css"
 
 const ManagePage = () => {
     return (
-        <div>
-              <div class="manage__main--content">
-        <div class="manage__header--wrapper">
-            
-            <div class="manage__user--info">
-                <div class="manage__search--box">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" placeholder="Search" />
-                </div>
-                <img src="img.jpg" alt="" />
+        <>
+            <div className="manage__buttons">
+                <button className="manage__button active">All</button>
+                <button className="manage__button">Earnings</button>
+                <button className="manage__button">Vacation days</button>
+                <button className="manage__button">Benefits</button>
             </div>
-        </div>
-
-        
-        <div class="manage__tabular--wrapper">
-            <div class="manage__toolbar">
-                <div class="manage__search--bax">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" placeholder="Search" />
-                </div>
-                    <i class="fa-solid fa-arrow-up-wide-short">Sort</i>
-                    <i class="fa-solid fa-filter">Filter</i>
+            <div className="manage__tabular--wrapper">
+                <div className="manage__toolbar">
+                    <div className="manage__search--box">
+                        <i className="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search" />
+                    </div>
+                    <div className="manage__sort-filter">
+                        <i className="fa-solid fa-arrow-up-wide-short">Sort</i>
+                        <i className="fa-solid fa-filter">Filter</i>
+                    </div>
                     <button type="button" id="delete">Delete</button>
-            </div>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -37,72 +32,72 @@ const ManagePage = () => {
                             <th>Type</th>
                             <th>Total Earnings</th>
                             <th>Total Vacation Days</th>
-                            <th>Total benefit</th>
+                            <th>Total Benefit</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nguyen Van A</td>
-                                <td>Sales</td>
-                                <td>True</td>
-                                <td>Male</td>
-                                <td>Full-time</td>
-                                <td>100000 USD</td>
-                                <td>35000 USD</td>
-                                <td>35000USD</td>
-                                <td><i class="fa-solid fa-user-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Nguyen Van A</td>
-                                <td>Sales</td>
-                                <td>True</td>
-                                <td>Male</td>
-                                <td>Full-time</td>
-                                <td>100000 USD</td>
-                                <td>35000 USD</td>
-                                <td>35000USD</td>
-                                <td><i class="fa-solid fa-user-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Nguyen Van A</td>
-                                <td>Sales</td>
-                                <td>True</td>
-                                <td>Male</td>
-                                <td>Full-time</td>
-                                <td>100000 USD</td>
-                                <td>35000 USD</td>
-                                <td>35000USD</td>
-                                <td><i class="fa-solid fa-user-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Nguyen Van A</td>
-                                <td>Sales</td>
-                                <td>True</td>
-                                <td>Male</td>
-                                <td>Full-time</td>
-                                <td>100000 USD</td>
-                                <td>35000 USD</td>
-                                <td>35000USD</td>
-                                <td><i class="fa-solid fa-user-pen"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Nguyen Van A</td>
-                                <td>Sales</td>
-                                <td>True</td>
-                                <td>Male</td>
-                                <td>Full-time</td>
-                                <td>100000 USD</td>
-                                <td>35000 USD</td>
-                                <td>35000USD</td>
-                                <td><i class="fa-solid fa-user-pen"></i></td>
-                            </tr>
-                        </tbody>
+                    <tbody>
+                        <tr>
+                            <td>Nguyen Van A</td>
+                            <td>Sales</td>
+                            <td>True</td>
+                            <td>Male</td>
+                            <td>Full-time</td>
+                            <td>100000 USD</td>
+                            <td>35000 USD</td>
+                            <td>35000 USD</td>
+                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Nguyen Van A</td>
+                            <td>Sales</td>
+                            <td>True</td>
+                            <td>Male</td>
+                            <td>Full-time</td>
+                            <td>100000 USD</td>
+                            <td>35000 USD</td>
+                            <td>35000 USD</td>
+                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Nguyen Van A</td>
+                            <td>Sales</td>
+                            <td>True</td>
+                            <td>Male</td>
+                            <td>Full-time</td>
+                            <td>100000 USD</td>
+                            <td>35000 USD</td>
+                            <td>35000 USD</td>
+                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Nguyen Van A</td>
+                            <td>Sales</td>
+                            <td>True</td>
+                            <td>Male</td>
+                            <td>Full-time</td>
+                            <td>100000 USD</td>
+                            <td>35000 USD</td>
+                            <td>35000 USD</td>
+                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Nguyen Van A</td>
+                            <td>Sales</td>
+                            <td>True</td>
+                            <td>Male</td>
+                            <td>Full-time</td>
+                            <td>100000 USD</td>
+                            <td>35000 USD</td>
+                            <td>35000 USD</td>
+                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-       
+        </>
     );
 };
 
 export default ManagePage;
+
