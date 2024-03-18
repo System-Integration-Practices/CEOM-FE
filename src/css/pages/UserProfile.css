@@ -1,0 +1,101 @@
+.view__container {
+  width: 1240px;
+  margin: 0 auto;
+}
+
+.view__user {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin-bottom: 20px;
+}
+
+.view__heading {
+  font-size: 4rem;
+  color: #252733;
+  flex-shrink: 0;
+}
+
+.view__line {
+  width: 100%;
+  height: 3px;
+  background-color: #dcdddf;
+}
+
+.view__user-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 35px;
+  border-right: 1px solid #787878;
+  height: 100%;
+  justify-content: center;
+}
+
+.view__user-name {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.view__user-major {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.view__user-info {
+  flex: 1;
+  padding: 60px 40px;
+  height: 100%;
+}
+
+.view__label-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  width: 200px;
+  color: #999999;
+}
+
+.view__label-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.view__user-button {
+  color: #7d7d7d;
+}
+
+.view__user-button.active {
+  color: #4f65df;
+  position: relative;
+}
+
+.view__user-button.active::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #4f65df;
+  left: 0;
+  bottom: 0;
+  translate: 0 100%;
+}
+
+.view__user-table {
+  width: 100%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.view__user-table thead {
+  background-color: #eff3ff;
+}
+
+.view__user-table tr {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.view__user-table th {
+}
+
+.view__user-table td {
+}

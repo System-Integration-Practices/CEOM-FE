@@ -87,3 +87,8 @@
 .sidebar__link.enable .sidebar__link-name {
   color: #334d6e;
 }
+
+.label.form-label {
+  width: 100%;
+  display: block;
+}

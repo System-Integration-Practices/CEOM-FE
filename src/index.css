@@ -6,6 +6,7 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  color: #252733;
 }
 
 html {

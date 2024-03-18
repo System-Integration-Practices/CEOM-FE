@@ -1,7 +1,6 @@
 import './App.css';
 import Header from './components/Header';
 import ManagePage from './pages/ManagePage';
-import HomePage from './pages/HomePage';
 import { Login } from "./component/login/Login";
 import { toast, ToastContainer } from "react-toastify";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -10,6 +9,9 @@ import ScrollReveal from "scrollreveal";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./layouts/Home";
 import { NotFound } from "./component/404-not-found/NotFound";
+import HomePage from "./pages/HomePage";
+import UserProfile from "./pages/UserProfile";
+import ManageEditPage from './pages/ManageEditPage';
 
 function App() {
   const navigate = useNavigate();
@@ -49,6 +51,8 @@ function App() {
         <Route element={<Home></Home>}>
           <Route path="" element={<HomePage></HomePage>}></Route>
           <Route path="/manage" element={<ManagePage></ManagePage>}></Route>
+          <Route path="/user-profile" element={<UserProfile></UserProfile>}></Route>
+          <Route path="/manage-edit" element={<ManageEditPage></ManageEditPage>}></Route>
         </Route>
       </Routes>
       <ToastContainer />

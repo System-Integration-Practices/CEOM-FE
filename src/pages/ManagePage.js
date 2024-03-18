@@ -2,8 +2,8 @@ import React from 'react';
 import "../css/pages/ManagePage.css"
 
 const ManagePage = () => {
-    return (
-        <>
+    return (       
+        <div className="manage__container">
             <div className="manage__buttons">
                 <button className="manage__button active">All</button>
                 <button className="manage__button">Earnings</button>
@@ -12,15 +12,12 @@ const ManagePage = () => {
             </div>
             <div className="manage__tabular--wrapper">
                 <div className="manage__toolbar">
-                    <div className="manage__search--box">
                         <i className="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Search" />
-                    </div>
-                    <div className="manage__sort-filter">
+                        <input type="text" placeholder="Search" />  
                         <i className="fa-solid fa-arrow-up-wide-short">Sort</i>
                         <i className="fa-solid fa-filter">Filter</i>
-                    </div>
-                    <button type="button" id="delete">Delete</button>
+                        <button type="button" className="button__delete">Delete</button>
+                
                 </div>
                 <table>
                     <thead>
@@ -33,7 +30,7 @@ const ManagePage = () => {
                             <th>Total Earnings</th>
                             <th>Total Vacation Days</th>
                             <th>Total Benefit</th>
-                            <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +43,7 @@ const ManagePage = () => {
                             <td>100000 USD</td>
                             <td>35000 USD</td>
                             <td>35000 USD</td>
-                            <td><i className="fa-solid fa-user-pen"></i></td>
+                            
                         </tr>
                         <tr>
                             <td>Nguyen Van A</td>
@@ -57,7 +54,7 @@ const ManagePage = () => {
                             <td>100000 USD</td>
                             <td>35000 USD</td>
                             <td>35000 USD</td>
-                            <td><i className="fa-solid fa-user-pen"></i></td>
+                        
                         </tr>
                         <tr>
                             <td>Nguyen Van A</td>
@@ -68,7 +65,7 @@ const ManagePage = () => {
                             <td>100000 USD</td>
                             <td>35000 USD</td>
                             <td>35000 USD</td>
-                            <td><i className="fa-solid fa-user-pen"></i></td>
+                            
                         </tr>
                         <tr>
                             <td>Nguyen Van A</td>
@@ -79,7 +76,7 @@ const ManagePage = () => {
                             <td>100000 USD</td>
                             <td>35000 USD</td>
                             <td>35000 USD</td>
-                            <td><i className="fa-solid fa-user-pen"></i></td>
+                            
                         </tr>
                         <tr>
                             <td>Nguyen Van A</td>
@@ -90,12 +87,12 @@ const ManagePage = () => {
                             <td>100000 USD</td>
                             <td>35000 USD</td>
                             <td>35000 USD</td>
-                            <td><i className="fa-solid fa-user-pen"></i></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
+    
     );
 };
 

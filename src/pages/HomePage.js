@@ -32,8 +32,22 @@ const HomePage = () => {
       <div className="view__table">
         <form action="" className="view__table-form">
           <div className="view__table-group">
-            <input type="text" className="view__table-input" />
-            <button className="view__table-button"></button>
+            <div className="w-full">
+              <input type="text" className="view__table-input" />
+              <button className="view__table-button">
+                <img src="/assets/icons/search.svg" alt="" />
+              </button>
+            </div>
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-4 text-lg">
+                <img src="/assets/icons/sort.svg" alt="" />
+                Sort
+              </div>
+              <div className="flex items-center gap-4 text-lg">
+                <img src="/assets/icons/filter.svg" alt="" />
+                Filter
+              </div>
+            </div>
           </div>
           <table className="view__table-view">
             <thead>
@@ -44,10 +58,12 @@ const HomePage = () => {
                 <th>Gender</th>
                 <th>Type</th>
                 <th>
-                  Total Earnings <span>(last year)</span>
+                  Total Earnings{" "}
+                  <span className="text-lg block font-normal">(last year)</span>
                 </th>
                 <th>
-                  Total Earnings <span>(present)</span>
+                  Total Earnings{" "}
+                  <span className="text-lg block font-normal">(present)</span>
                 </th>
               </tr>
             </thead>
