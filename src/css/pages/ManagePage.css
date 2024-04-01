@@ -46,6 +46,9 @@
     background: red;
 }
 
+.manage__toolbar.i {
+    width: 100%;
+}
 table {
     width: 100%;
     border-collapse: collapse;

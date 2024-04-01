@@ -13,11 +13,7 @@ const ManagePage = () => {
             <div className="manage__tabular--wrapper">
                 <div className="manage__toolbar">
                         <i className="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Search" />  
-                        <i className="fa-solid fa-arrow-up-wide-short">Sort</i>
-                        <i className="fa-solid fa-filter">Filter</i>
-                        <button type="button" className="button__delete">Delete</button>
-                
+                        <input type="text" placeholder="Search" />   
                 </div>
                 <table>
                     <thead>
