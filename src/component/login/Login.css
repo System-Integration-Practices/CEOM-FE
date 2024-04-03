@@ -1,0 +1,46 @@
+.login-form {
+    width: 400px;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 50px auto;
+    font-family: Arial, sans-serif;
+}
+
+.login-form h2 {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+.login-form label {
+    display: block;
+    margin-top: 20px;
+}
+
+.login-form .input-username,
+.login-form .input-password {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form .btn-login {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #4F65DF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
