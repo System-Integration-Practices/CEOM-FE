@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Home } from "./component/home/home";
 import { NotFound } from "./component/404-not-found/NotFound";
 import { jwtDecode } from "jwt-decode";
+import { Create } from "./component/create/Create";
 function App() {
   const navigate = useNavigate();
   const [decodedToken, setDecodedToken] = useState(null);
@@ -59,7 +60,19 @@ function App() {
         )}
 
         <Route path="/*" element={localStorage.getItem('token') ? <NotFound /> : <Navigate to="/login" />}></Route> */}
+{/* 
+        <Route path="/login" element={<Login />}></Route>
+        {localStorage.getItem('roles').includes("ROLE_ADMIN") && (
+          <Route path="/home" element={localStorage.getItem('token') ? <Home /> : <Navigate to="/login" />} />
+        ) && (
+            <Route path="/create" element={localStorage.getItem('token') ? <Create /> : <Navigate to="/login" />} />
+          )
+        } */}
+
+        {/* <Route path="/*" element={localStorage.getItem('token') ? <NotFound /> : <Navigate to="/login" />}></Route> */}
+
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/create" element={<Create />}></Route>
       </Routes>
       <ToastContainer />
 
