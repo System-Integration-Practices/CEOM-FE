@@ -64,17 +64,17 @@ export const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((e, index) => (
+                        {data.map((p, index) => (
                             <tr key={index}>
-                                <td>{e.current_FIRST_NAME}</td>
-                                <td>{e.current_MIDDLE_NAME}</td>
-                                <td>{e.current_LAST_NAME}</td>
-                                <td>{e.current_GENDER}</td>
-                                <td>{e.current_PERSONAL_EMAIL}</td>
-                                <td>{e.current_PHONE_NUMBER}</td>
-                                <td>{e.plan_NAME}</td>
-                                <td>{e.payAmount}</td>
-                                <td>{e.total_NUMBER_VACATION_WORKING_DAYS_PER_MONTH}</td>
+                                <td>{p.current_FIRST_NAME}</td>
+                                <td>{p.current_MIDDLE_NAME}</td>
+                                <td>{p.current_LAST_NAME}</td>
+                                <td>{p.current_GENDER}</td>
+                                <td>{p.current_PERSONAL_EMAIL}</td>
+                                <td>{p.current_PHONE_NUMBER}</td>
+                                <td>{p.plan_NAME}</td>
+                                <td>{p.payAmount}</td>
+                                <td>{p.total_NUMBER_VACATION_WORKING_DAYS_PER_MONTH}</td>
                             </tr>
                         ))}
                     </tbody>
