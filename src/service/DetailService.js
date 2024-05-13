@@ -24,12 +24,3 @@ export const getEmploymenyById = async (employmentId) => {
     const res = await axios.get(BASE_URL + "sqlserver/employment/getEmploymentDTOById/" + employmentId)
     return res.data;
 }
-
-export const save = async (employeeNumber, personalId, employmentId, values) => {
-    try {
-        await axios.post(BASE_URL + API_URL + "update/eployee/" + employeeNumber + "/personal/" + personalId + "/employment/" + employmentId, values)
-        return null;
-    } catch (e) {
-        return e;
-    }
-}

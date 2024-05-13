@@ -1,11 +1,12 @@
 import axios from "axios"
 const API_URL = "http://localhost:8080/api/integration/";
-export const save = async (value) => {
+const BASE_URL = "/api/integration/";
+export const save = async (values) => {
     try {
-        await axios.post("http://localhost:8080/api/integration/create", value)
+        await axios.post("http://localhost:8080/api/integration/create", values)
         return null;
     } catch (e) {
-        return e.response.data;
+        return e;
     }
 }
 

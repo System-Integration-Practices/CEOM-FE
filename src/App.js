@@ -7,6 +7,8 @@ import { Home } from "./component/home/home";
 import { NotFound } from "./component/404-not-found/NotFound";
 import { jwtDecode } from "jwt-decode";
 import { Create } from "./component/create/Create";
+import { Update } from "./component/update/Update";
+import { Detail } from "./component/detail/Detail";
 function App() {
   const navigate = useNavigate();
   const [decodedToken, setDecodedToken] = useState(null);
@@ -73,6 +75,8 @@ function App() {
 
         <Route path="/home" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>
+        <Route path="/edit-personal/:personalId/:employmentId" element={<Update />}></Route>
+        <Route path="/detail-personal/:personalId/:employmentId" element={<Detail />}></Route>
       </Routes>
       <ToastContainer />
 

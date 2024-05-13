@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {PaginationNav} from "../pagination/PaginationNav";
+import { useNavigate, NavLink } from "react-router-dom";
+import { PaginationNav } from "../pagination/PaginationNav";
 import * as HomeService from '../../service/HomeService'
+import * as DeleteService from '../../service/DeleteService'
+import DeleteConfirmation from "../delete/DeleteConfirmation";
+import { toast } from "react-toastify";
 export const Home = () => {
     const navigate = useNavigate();
     let logout = () => {
@@ -17,6 +20,12 @@ export const Home = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const [find, setFind] = useState("");
 
+    const [displayModal, setDisplayModal] = useState(false);
+    const [deleteMessage, setDeleteMessage] = useState(null);
+
+    const [personalId, setPersonalId] = useState(null);
+    const [employmentId, setEmploymentId] = useState(null);
+
     const fetchData = async () => {
         try {
             const response = await HomeService.findAll(find, pageNumber);
@@ -31,7 +40,7 @@ export const Home = () => {
         fetchData();
     }, [find, pageNumber]);
 
-    
+
 
     const handleNextPage = () => {
         if (currentPage < totalPages - 1) {
@@ -45,6 +54,25 @@ export const Home = () => {
         }
     };
 
+    const showDeleteModal = (personalId) => {
+        setPersonalId(personalId)
+        setDeleteMessage(
+            `Are u sure about that?`
+        );
+        setDisplayModal(true);
+    }
+
+    const hideConfirmationModal = () => {
+        setDisplayModal(false);
+    };
+
+    const submitDelete = async (personalId) => {
+        await DeleteService.deletePersonal(personalId);
+        toast.success(`Xóa thành công.`)
+        setDisplayModal(false);
+        await fetchData(0, '');
+    };
+
     return (
         <>
             <h1>TRANG CHỦ</h1>
@@ -52,6 +80,7 @@ export const Home = () => {
                 <table class="table">
                     <thead>
                         <tr>
+                            <th scope="col">STT</th>
                             <th scope="col">First name</th>
                             <th scope="col">Middle name</th>
                             <th scope="col">Last name</th>
@@ -61,11 +90,13 @@ export const Home = () => {
                             <th scope="col">Plan name</th>
                             <th scope="col">Pay amount</th>
                             <th scope="col">Vacation working days per month</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((p, index) => (
                             <tr key={index}>
+                                <td>{index + 1}</td>
                                 <td>{p.current_FIRST_NAME}</td>
                                 <td>{p.current_MIDDLE_NAME}</td>
                                 <td>{p.current_LAST_NAME}</td>
@@ -75,14 +106,38 @@ export const Home = () => {
                                 <td>{p.plan_NAME}</td>
                                 <td>{p.payAmount}</td>
                                 <td>{p.total_NUMBER_VACATION_WORKING_DAYS_PER_MONTH}</td>
+                                <td>
+                                    <div className="card-footer">
+
+                                        <div className="card-footer">
+                                            <div style={{ float: 'right' }}>
+
+                                                <NavLink to={`/detail-personal/${p.personal_ID}/${p.employment_ID}`}
+                                                    className="btn btn-secondary rounded-circle center-icon ">
+                                                    <div>
+                                                        <i className="bi bi-info-lg"></i>
+                                                    </div>
+                                                </NavLink>
+
+                                                <button className="btn btn-danger rounded-circle " onClick={() => showDeleteModal(p.personal_ID)}><i
+                                                    className="bi bi-trash "></i>
+                                                </button>
+
+                                                <NavLink to={`/edit-personal/${p.personal_ID}/${p.employment_ID}`}
+                                                    className="btn btn-success rounded-circle center-icon ">
+                                                    <div>
+                                                        <i className="bi bi-pencil"></i>
+                                                    </div>
+                                                </NavLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            {/* <button onClick={handlePrevPage} disabled={currentPage === 0}>Previous Page</button>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages - 1}>Next Page</button> */}
-
             <div className="row" style={{ marginTop: '20px' }}>
                 <div>
                     <PaginationNav pageNumber={pageNumber}
@@ -90,6 +145,9 @@ export const Home = () => {
                         setPageNumber={setPageNumber} />
                 </div>
             </div>
+
+            <DeleteConfirmation showModal={displayModal} confirmModal={submitDelete}
+                hideModal={hideConfirmationModal} id={personalId} message={deleteMessage} />
 
             <button onClick={logout}>Logout</button>
         </>
