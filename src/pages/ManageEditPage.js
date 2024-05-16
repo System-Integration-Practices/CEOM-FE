@@ -1,9 +1,7 @@
 import React from 'react';
 import "../css/pages/ManageEditPage.css";
-
-
-
-
+import {Link} from "react-router-dom";
+ 
 const ManageEditPage = () => {
 
     return (
@@ -211,6 +209,25 @@ const ManageEditPage = () => {
                     <button className="btn1">Last Page</button> 
                 </div>
             </div>
+
+            <div className="row mb-5">
+					<div className="col-sm-2">
+						<button
+							type="submit"
+							className="btn btn-outline-success btn-lg">
+							Save
+						</button>
+					</div>
+
+					<div className="col-sm-2">
+						<Link
+							to={"/manage"}
+							type="submit"
+							className="btn btn-outline-warning btn-lg">
+							Cancel
+						</Link>
+					</div>
+				</div>
         </div>
     );
 };

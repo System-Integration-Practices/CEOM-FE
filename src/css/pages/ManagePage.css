@@ -25,7 +25,7 @@
   }
   
   .manage__button.active {
-    color: #4f65df;
+    color: #122ecb;
     background-color: #fff;
   }
   
@@ -52,17 +52,26 @@
 table {
     width: 100%;
     border-collapse: collapse;
+    justify-content: space-between;
 }
 
 thead {
+
     background: rgba(113, 99, 186, 255);
     color: #fff;
 }
+tr {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    border-bottom: 1px solid #dfe0eb;
+    height: 80px;
+    place-items: center;
+  }
 
 th {
-    padding: 10px;
-    text-align: right;
-    text-align: center;
+    display:flex;
+    padding: 20px;
+    
 }
 
 tbody{

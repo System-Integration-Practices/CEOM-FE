@@ -52,7 +52,7 @@ function App() {
           <Route path="" element={<HomePage></HomePage>}></Route>
           <Route path="/manage" element={<ManagePage></ManagePage>}></Route>
           <Route path="/user-profile" element={<UserProfile></UserProfile>}></Route>
-          <Route path="/manage-edit" element={<ManageEditPage></ManageEditPage>}></Route>
+          <Route path="/manage-edit"  element={<ManageEditPage></ManageEditPage>}></Route>
         </Route>
       </Routes>
       <ToastContainer />

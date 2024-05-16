@@ -65,6 +65,7 @@ const HomePage = () => {
                   Total Earnings{" "}
                   <span className="text-lg block font-normal">(present)</span>
                 </th>
+          
               </tr>
             </thead>
             <tbody>
