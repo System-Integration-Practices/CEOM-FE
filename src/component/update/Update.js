@@ -15,28 +15,61 @@ export const Update = () => {
     const [employee, setEmployee] = useState()
 
 
-   const { personalId, employmentId } = useParams();
+    const { personalId, employmentId } = useParams();
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const employment = await UpdateService.getEmploymenyById(employmentId);
+    //             const personal = await UpdateService.getPersonalById(personalId);
+    //             const employee = await UpdateService.getEmployeeById(employmentId);
+    //             const benefitPlans = await UpdateService.findAllBenefit();
+    //             const payRates = await UpdateService.findAllPayrates();
+
+    //             setEmployment(employment);
+    //             setPersonal(personal);
+    //             setEmployee(employee)
+    //             setBenefitPlans(benefitPlans);
+    //             setPayRates(payRates);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const employment = await UpdateService.getEmploymenyById(employmentId);
-                const personal = await UpdateService.getPersonalById(personalId);
-                const employee = await UpdateService.getEmployeeById(employmentId);
-                const benefitPlans = await UpdateService.findAllBenefit();
-                const payRates = await UpdateService.findAllPayrates();
+                const [
+                    employmentData,
+                    personalData,
+                    employeeData,
+                    benefitPlansData,
+                    payRatesData
+                ] = await Promise.all([
+                    UpdateService.getEmploymenyById(employmentId),
+                    UpdateService.getPersonalById(personalId),
+                    UpdateService.getEmployeeById(employmentId),
+                    UpdateService.findAllBenefit(),
+                    UpdateService.findAllPayrates()
+                ]);
 
-                setEmployment(employment);
-                setPersonal(personal);
-                setEmployee(employee)
-                setBenefitPlans(benefitPlans);
-                setPayRates(payRates);
+                setEmployment(employmentData);
+                setPersonal(personalData);
+                setEmployee(employeeData);
+                setBenefitPlans(benefitPlansData);
+                setPayRates(payRatesData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-        fetchData();
-    }, []);
+
+        if (personalId && employmentId) {
+            fetchData();
+        }
+    }, [personalId, employmentId]);
+
     return employment ? (
         <>
             <div>Update</div>
@@ -48,7 +81,7 @@ export const Update = () => {
                         middleInitial: personal.current_MIDDLE_NAME,
                         birthday: personal.birth_DATE,
                         ssn: personal.social_SECURITY_NUMBER,
-                        driversLicense: personal.driver_LICENSE,
+                        driversLicense: personal.drivers_LICENSE,
                         address1: personal.current_ADDRESS_1,
                         address2: personal.current_ADDRESS_2,
                         city: personal.current_CITY,
@@ -62,14 +95,22 @@ export const Update = () => {
                         shareholderStatus: personal.shareholder_STATUS,
                         benefitPlanId: personal.benefit_PLAN_ID
                     },
-                    employee: {
-                        idEmployee: employee.idEmployee,
-                        paidLastYear: employee.paidLastYear,
-                        paidToDate: employee.paidToDate,
-                        payRate: employee.payRate,
-                        idPayRate: employee.idPayRates,
-                        ssn: employee.ssn,
-                        vacationDays: employee.vacationDays
+                    employee: employee ? {
+                        idEmployee: employee.idEmployee || '',
+                        paidLastYear: employee.paidLastYear || '',
+                        paidToDate: employee.paidToDate || '',
+                        payRate: employee.payRate || '',
+                        idPayRate: employee.idPayRates || '',
+                        ssn: employee.ssn || '',
+                        vacationDays: employee.vacationDays || ''
+                    } : {
+                        idEmployee: '',
+                        paidLastYear: '',
+                        paidToDate: '',
+                        payRate: '',
+                        idPayRate: '',
+                        ssn: '',
+                        vacationDays: ''
                     },
                     employment: {
                         employmentCode: employment.employment_CODE,
@@ -88,23 +129,24 @@ export const Update = () => {
                 })}
 
                 onSubmit={async (values) => {
+                    console.log(values);
                     try {
                         const response = await UpdateService.save(employee.employeeNumber, personal.personal_ID, employment.employment_ID, values);
 
                         if (response != null) {
-                            setErrorData(response)
+                            setErrorData(response);
                             toast('Lỗi! Thêm mới thất bại');
                         } else {
-                            setErrorData({})
+                            setErrorData({});
                             toast('Thêm mới thành công!!!!');
                             setTimeout(() => {
-                                navigate("/home")
-                            }, 1000)
+                                navigate("/home");
+                            }, 1000);
                         }
-                        console.log(errorData)
+                        console.log(errorData);
                     } catch (error) {
                         toast('Lỗi! thêm mới thất bại');
-                        console.log(error)
+                        console.log(error);
                     }
                 }}
             >

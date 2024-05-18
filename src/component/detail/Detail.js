@@ -19,25 +19,36 @@ export const Detail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const employment = await DetailService.getEmploymenyById(employmentId);
-                const personal = await DetailService.getPersonalById(personalId);
-                const employee = await DetailService.getEmployeeById(employmentId);
-                const benefitPlans = await DetailService.findAllBenefit();
-                const payRates = await DetailService.findAllPayrates();
+                const [
+                    employmentData,
+                    personalData,
+                    employeeData,
+                    benefitPlansData,
+                    payRatesData
+                ] = await Promise.all([
+                    DetailService.getEmploymenyById(employmentId),
+                    DetailService.getPersonalById(personalId),
+                    DetailService.getEmployeeById(employmentId),
+                    DetailService.findAllBenefit(),
+                    DetailService.findAllPayrates()
+                ]);
 
-                setEmployment(employment);
-                setPersonal(personal);
-                setEmployee(employee)
-                setBenefitPlans(benefitPlans);
-                setPayRates(payRates);
+                setEmployment(employmentData || null);
+                setPersonal(personalData);
+                setEmployee(employeeData || null);
+                setBenefitPlans(benefitPlansData);
+                setPayRates(payRatesData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-        fetchData();
-    }, []);
 
-    return employment ? (
+        if (personalId && employmentId) {
+            fetchData();
+        }
+    }, [personalId, employmentId]);
+
+    return personal ? (
         <>
             <div>Detail</div>
             <Formik
@@ -48,7 +59,7 @@ export const Detail = () => {
                         middleInitial: personal.current_MIDDLE_NAME,
                         birthday: personal.birth_DATE,
                         ssn: personal.social_SECURITY_NUMBER,
-                        driversLicense: personal.driver_LICENSE,
+                        driversLicense: personal.drivers_LICENSE,
                         address1: personal.current_ADDRESS_1,
                         address2: personal.current_ADDRESS_2,
                         city: personal.current_CITY,
@@ -62,14 +73,22 @@ export const Detail = () => {
                         shareholderStatus: personal.shareholder_STATUS,
                         benefitPlanId: personal.benefit_PLAN_ID
                     },
-                    employee: {
-                        idEmployee: employee.idEmployee,
-                        paidLastYear: employee.paidLastYear,
-                        paidToDate: employee.paidToDate,
-                        payRate: employee.payRate,
-                        idPayRate: employee.idPayRates,
-                        ssn: employee.ssn,
-                        vacationDays: employee.vacationDays
+                    employee: employee ? {
+                        idEmployee: employee.idEmployee || '',
+                        paidLastYear: employee.paidLastYear || '',
+                        paidToDate: employee.paidToDate || '',
+                        payRate: employee.payRate || '',
+                        idPayRate: employee.idPayRates || '',
+                        ssn: employee.ssn || '',
+                        vacationDays: employee.vacationDays || ''
+                    } : {
+                        idEmployee: '',
+                        paidLastYear: '',
+                        paidToDate: '',
+                        payRate: '',
+                        idPayRate: '',
+                        ssn: '',
+                        vacationDays: ''
                     },
                     employment: {
                         employmentCode: employment.employment_CODE,

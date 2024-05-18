@@ -77,6 +77,11 @@ export const Home = () => {
         <>
             <h1>TRANG CHỦ</h1>
             <div>
+                <NavLink to={`/create`}>
+                    <button className="btn btn-success" >CREATE</button>
+                </NavLink>
+            </div>
+            <div>
                 <table class="table">
                     <thead>
                         <tr>

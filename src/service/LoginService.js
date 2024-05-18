@@ -7,7 +7,7 @@ export const login = async (login) => {
             const token = JSON.stringify(res.data.jwtCookie.value);
             const decoded = jwtDecode(token);
             localStorage.setItem("token", token);
-            localStorage.setItem("roles", decoded.roles);
+            localStorage.setItem("roles", res.data.roles);
             localStorage.setItem("username", decoded.name);
             // console.log(decoded.roles, decoded.name, token, decoded);
             return res.data;

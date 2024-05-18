@@ -62,16 +62,13 @@ function App() {
         )}
 
         <Route path="/*" element={localStorage.getItem('token') ? <NotFound /> : <Navigate to="/login" />}></Route> */}
-{/* 
-        <Route path="/login" element={<Login />}></Route>
+
+        {/* <Route path="/login" element={<Login />}></Route>
         {localStorage.getItem('roles').includes("ROLE_ADMIN") && (
           <Route path="/home" element={localStorage.getItem('token') ? <Home /> : <Navigate to="/login" />} />
-        ) && (
-            <Route path="/create" element={localStorage.getItem('token') ? <Create /> : <Navigate to="/login" />} />
-          )
-        } */}
-
-        {/* <Route path="/*" element={localStorage.getItem('token') ? <NotFound /> : <Navigate to="/login" />}></Route> */}
+        ) 
+        }
+        <Route path="/*" element={localStorage.getItem('token') ? <NotFound /> : <Navigate to="/login" />}></Route> */}
 
         <Route path="/home" element={<Home />}></Route>
         <Route path="/create" element={<Create />}></Route>

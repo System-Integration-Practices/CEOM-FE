@@ -8,20 +8,39 @@ export const Create = () => {
     const [errorData, setErrorData] = useState({})
     const [benefitPlans, setBenefitPlans] = useState([])
     const [payRates, setPayRates] = useState([])
+    // useEffect(() => {
+    //     const getAllBenefit = async () => {
+    //         const benefitPlans = await CreateService.findAllBenefit();
+    //         setBenefitPlans(benefitPlans);
+    //     }
+
+    //     const getAllPayRates = async () => {
+    //         const payRates = await CreateService.findAllPayrates();
+    //         setPayRates(payRates);
+    //     }
+
+    //     getAllBenefit()
+    //     getAllPayRates()
+    //     console.log(benefitPlans)
+    // }, [])
+
     useEffect(() => {
-        const getAllBenefit = async () => {
-            const benefitPlans = await CreateService.findAllBenefit();
-            setBenefitPlans(benefitPlans);
+        const fetchData = async () => {
+            try {
+                const [benefitPlans, payRates] = await Promise.all([
+                    CreateService.findAllBenefit(),
+                    CreateService.findAllPayrates()
+                ]);
+                setBenefitPlans(benefitPlans);
+                setPayRates(payRates);
+            } catch (error) {
+                console.error("Network Error", error);
+            }
         }
 
-        const getAllPayRates = async () => {
-            const payRates = await CreateService.findAllPayrates();
-            setPayRates(payRates);
-        }
+        fetchData();
+    }, []);
 
-        getAllBenefit()
-        getAllPayRates()
-    }, [])
 
     const navigate = useNavigate()
 
@@ -32,7 +51,7 @@ export const Create = () => {
                     personal: {
                         firstName: "",
                         lastName: "",
-                        middleInitial: "",
+                        middleName: "",
                         birthday: '',
                         ssn: "",
                         driversLicense: "",
@@ -41,20 +60,20 @@ export const Create = () => {
                         city: "",
                         country: "",
                         zip: '',
-                        gender: '',
+                        gender: 1,
                         email: "",
                         phoneNumber: "",
-                        maritalStatus: "",
+                        maritalStatus: 1,
                         ethnicity: "",
-                        shareholderStatus: '',
-                        benefitPlanId: ''
+                        shareholderStatus: 1,
+                        benefitPlanId: 1
                     },
                     employee: {
                         idEmployee: '',
                         paidLastYear: '',
                         paidToDate: '',
                         payRate: '',
-                        idPayRate: '',
+                        idPayRate: 1,
                         ssn: '',
                         vacationDays: ''
                     },
@@ -76,6 +95,7 @@ export const Create = () => {
 
                 onSubmit={async (values) => {
                     try {
+                        console.log(values);
                         const response = await CreateService.save(values);
 
                         if (response != null) {
@@ -114,10 +134,10 @@ export const Create = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="middleInitial">Middle name (<span
+                        <label htmlFor="middleName">Middle name (<span
                             className="text-danger">*</span>):</label>
-                        <Field type="text" className="form-control" id="middleInitial" name="personal.middleInitial" />
-                        <ErrorMessage name="middleInitial" className="text-danger" component="p" />
+                        <Field type="text" className="form-control" id="middleName" name="personal.middleName" />
+                        <ErrorMessage name="middleName" className="text-danger" component="p" />
                     </div>
 
                     <div>
@@ -177,15 +197,15 @@ export const Create = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="gender">Gender (<span
-                            className="text-danger">*</span>):</label>
+                        <label htmlFor="gender">Gender (<span className="text-danger">*</span>):</label>
                         <Field as="select" className="form-control" id="gender" name="personal.gender">
-                            <option value={true}>Male</option>
-                            <option value={false}>Female</option>
+                            <option value="true">Male</option>
+                            <option value="false">Female</option>
                         </Field>
 
-                        <ErrorMessage name="gender" className="text-danger" component="p" />
+                        <ErrorMessage name="personal.gender" className="text-danger" component="p" />
                     </div>
+
 
                     <div>
                         <label htmlFor="email">Email (<span
@@ -231,7 +251,7 @@ export const Create = () => {
                     <div>
                         <label htmlFor="benefitPlans">Benefit Plans (<span
                             className="text-danger">*</span>):</label>
-                        <Field as="select" className="form-control" id="benefitPlans" name="personal.benefitPlans.benefitPlanId">
+                        <Field as="select" className="form-control" id="benefitPlans" name="personal.benefitPlanId">
                             {benefitPlans && benefitPlans.length > 0 ? (
                                 benefitPlans.map((benefit) => (
                                     <option key={benefit.benefitPlanId} value={benefit.benefitPlanId}>{benefit.planName}</option>
@@ -275,7 +295,7 @@ export const Create = () => {
                     <div>
                         <label htmlFor="payRates">Pay Rates (<span
                             className="text-danger">*</span>):</label>
-                        <Field as="select" className="form-control" id="payRates" name="employee.payRates">
+                        <Field as="select" className="form-control" id="payRates" name="employee.idPayRate">
                             {payRates && payRates.length > 0 ? (
                                 payRates.map((payRate) => (
                                     <option key={payRate.idPayRate} value={payRate.idPayRate}>{payRate.payRateName}</option>
