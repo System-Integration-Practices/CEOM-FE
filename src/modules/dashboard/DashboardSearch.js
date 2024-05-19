@@ -14,7 +14,7 @@ const DashboardSearch = ({ displayButton = true, setPagination }) => {
             onChange={(event) =>
               setPagination((item) => {
                 console.log(item);
-                return { ...item, query: event.target.value };
+                return { ...item, query: event.target.value, currentPage: 0 };
               })
             }
             className="w-full text-sm bg-transparent placeholder:text-text4 text-text1"

@@ -59,7 +59,7 @@ const TableAutoGenerate = ({ listData, pagination, setPagination }) => {
         <tbody className="w-full">
           {listData.map((user, index) => {
             const values = Object.values(user);
-            console.log("🚀 ~ {listData.map ~ values:", values);
+
             return (
               <tr key={index} className=" bg-[#FFF]">
                 {values.map((value, indexSub) => {

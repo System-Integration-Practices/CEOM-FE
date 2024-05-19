@@ -24,6 +24,7 @@ const listItemsPerPage = [5, 10, 15, 20];
 const DashboardPage = () => {
   const axiosPrivate = useAxiosPrivate();
   const [listPersonalOverview, setListPersonalOverview] = useState([]);
+  const [listBenefitPlan, setListBenefitPlan] = useState([]);
   const [pagination, setPagination] = useState({
     totalPages: 0,
     currentPage: 0,
@@ -32,7 +33,8 @@ const DashboardPage = () => {
   });
 
   const [search, setSearch] = useState({
-    query: "",
+    benefitPlan: "",
+    labelBenefit: "",
   });
 
   const handleSelectDropdownOption = (value) => {
@@ -40,14 +42,36 @@ const DashboardPage = () => {
       return { ...item, itemsPerPage: value, currentPage: 0 };
     });
   };
+
+  const handleSelectDropdownBenefit = (value) => {
+    if (!value) {
+      setSearch((item) => {
+        return {
+          ...item,
+          benefitPlan: "",
+        };
+      });
+    } else {
+      setSearch((item) => {
+        return {
+          ...item,
+          labelBenefit: value.planName,
+          benefitPlan: value.benefitPlanId,
+        };
+      });
+    }
+    setPagination((item) => {
+      return { ...item, currentPage: 0 };
+    });
+  };
   useEffect(() => {
-    async function fetchCampaigns() {
+    async function fetchPersonals() {
       console.log(
-        `/personal_integration?fullName=${search.query}&benefitPlanId=&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
+        `/personal_integration?fullName=${pagination.query}&benefitPlanId=${search.benefitPlan}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
       );
       try {
         const response = await axiosPrivate.get(
-          `/personal_integration?fullName=${search.query}&benefitPlanId=&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
+          `/personal_integration?fullName=${pagination.query}&benefitPlanId=${search.benefitPlan}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
         );
         setPagination((item) => {
           return {
@@ -76,9 +100,24 @@ const DashboardPage = () => {
         console.log(error);
       }
     }
-    fetchCampaigns();
+    async function fetchBenefitPlans() {
+      try {
+        const response = await axiosPrivate.get(`/benefit_plans`);
+        setListBenefitPlan(response.data);
+        console.log("🚀 ~ fetchBenefitPlans ~ response:", response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchPersonals();
+    fetchBenefitPlans();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagination.currentPage, search.query, pagination.itemsPerPage]);
+  }, [
+    pagination.currentPage,
+    pagination.query,
+    pagination.itemsPerPage,
+    search.benefitPlan,
+  ]);
   return (
     <Fragment>
       <div className="flex items-center justify-between mb-2">
@@ -88,12 +127,12 @@ const DashboardPage = () => {
         <div className=" max-w-[458px] w-full">
           <DashboardSearch
             displayButton={false}
-            setPagination={setSearch}
+            setPagination={setPagination}
           ></DashboardSearch>
         </div>
       </div>
       <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ">
           <span>Show</span>
           <Dropdown>
             <Dropdown.Select
@@ -113,141 +152,33 @@ const DashboardPage = () => {
           </Dropdown>
           <span>entries</span>
         </div>
+        <div className="flex items-center gap-3">
+          <div className="w-full">Benefit plan</div>
+          <Dropdown className="w-[200px]">
+            <Dropdown.Select
+              placeholder={search.labelBenefit || "Benefit"}
+              className="gap-2 w-[200px]"
+            ></Dropdown.Select>
+            <Dropdown.List>
+              <Dropdown.Option
+                key={0}
+                onClick={() => handleSelectDropdownBenefit(false)}
+              >
+                <span>{"Unselect"}</span>
+              </Dropdown.Option>
+              {listBenefitPlan.map((value) => (
+                <Dropdown.Option
+                  key={value.benefitPlanId}
+                  onClick={() => handleSelectDropdownBenefit(value)}
+                >
+                  <span>{value.planName.trim()}</span>
+                </Dropdown.Option>
+              ))}
+            </Dropdown.List>
+          </Dropdown>
+        </div>
       </div>
-      {/* <CampaignFeature></CampaignFeature> */}
       {listPersonalOverview && listPersonalOverview.length > 0 ? (
-        // <>
-        //   <table className=" w-full table-auto border-separate border-spacing-y-5 rounded-tl-xl rounded-tr-xl">
-        //     <thead className=" w-full bg-[#ECEFF1]">
-        //       <tr>
-        //         {listPersonalOverview &&
-        //           listPersonalOverview.length > 0 &&
-        //           Object.keys(listPersonalOverview[0]).map((label, index) => {
-        //             if (index === 0)
-        //               return (
-        //                 <th
-        //                   key={index}
-        //                   className="rounded-l-xl py-3 px-2 text-left text-base font-medium text-[#1B2432]"
-        //                 >
-        //                   STT
-        //                 </th>
-        //               );
-        //             if (
-        //               index ===
-        //               Object.keys(listPersonalOverview[0]).length - 1
-        //             )
-        //               return (
-        //                 <th className="rounded-r-xl text-left text-base font-medium text-[#1B2432]">
-        //                   {label
-        //                     .split(/(?=[A-Z])/)
-        //                     .map(
-        //                       (word) =>
-        //                         word.charAt(0).toUpperCase() + word.slice(1)
-        //                     )
-        //                     .join(" ")}
-        //                 </th>
-        //               );
-        //             return (
-        //               <th
-        //                 key={index}
-        //                 className=" py-3 px-2 text-left text-base font-medium text-[#1B2432]"
-        //               >
-        //                 {label
-        //                   .split(/(?=[A-Z])/)
-        //                   .map(
-        //                     (word) =>
-        //                       word.charAt(0).toUpperCase() + word.slice(1)
-        //                   )
-        //                   .join(" ")}
-        //               </th>
-        //             );
-        //           })}
-        //       </tr>
-        //     </thead>
-        //     <tbody className="w-full">
-        //       {listPersonalOverview.map((user, index) => {
-        //         return (
-        //           <tr key={index} className=" bg-[#FFF]">
-        //             <td className="py-3 pl-3 rounded-l-xl">
-        //               <span>{pagination.currentPage * 10 + index + 1}</span>
-        //             </td>
-        //             <td className="py-3 pl-3 rounded-l-xl">
-        //               <span>{user.fullName}</span>
-        //             </td>
-
-        //             {/* <td className="py-3 pl-3 rounded-l-xl">
-        //           <span>{user.lastName}</span>
-        //         </td>
-
-        //         <td className="py-3 pl-3 rounded-l-xl">
-        //           <span>{user.middleInitial}</span>
-        //         </td> */}
-
-        //             <td className="py-3 pl-3 rounded-l-xl">
-        //               <span>{user.gender ? "Male" : "Female"}</span>
-        //             </td>
-        //             <td className="py-3 pl-3 rounded-l-xl">
-        //               <span>{formatCurrency(user.payAmount)}</span>
-        //             </td>
-
-        //             <td className="py-3 pl-3 rounded-l-xl">
-        //               <span>{user.planName}</span>
-        //             </td>
-        //             {/* <td className="py-3 pl-3 rounded-l-xl">
-        //           <span>{user.name}</span>
-        //         </td>
-        //         <td className="py-3 pl-3">
-        //           <span>{user.id}</span>
-        //         </td>
-        //         <td className="py-3 pl-3">
-        //           <span> {user.email}</span>
-        //         </td>
-        //         <td className="py-3 pl-3">
-        //           <span>{user.phone}</span>
-        //         </td>
-        //         <td className="py-3 pl-3">
-        //           <span>{user.address}</span>
-        //         </td>
-        //         <td className="py-3 pl-3">
-        //           <span>{user.roles[0].roleValue}</span>
-        //         </td>
-        //         <td className="py-3 pl-3 ml-auto rounded-r-xl">
-        //           <div className="flex gap-2">
-        //             <button
-        //               onClick={() => {
-        //                 // setUser(() => user);
-        //                 // handleEdit();
-        //               }}
-        //               className="rounded-xl bg-[#23A9F9] px-3 py-2 text-white font-semibold"
-        //             >
-        //               Sửa
-        //             </button>
-        //             <button
-        //               onClick={() => {
-        //                 // setUser(() => user);
-        //                 // setModalRemove(true);
-        //               }}
-        //               className="rounded-xl bg-[#FFA900] px-3 py-2 text-white font-semibold"
-        //             >
-        //               Xóa
-        //             </button>
-        //           </div>
-        //         </td> */}
-        //           </tr>
-        //         );
-        //       })}
-        //     </tbody>
-        //   </table>
-        //   {pagination ? (
-        //     <Pagination
-        //       itemsPerPage={pagination.itemPerPage}
-        //       setCurrentPage={setPagination}
-        //       totalPages={pagination.totalPages}
-        //     ></Pagination>
-        //   ) : (
-        //     <></>
-        //   )}
-        // </>
         <TableAutoGenerate
           listData={listPersonalOverview}
           pagination={pagination}
@@ -256,33 +187,6 @@ const DashboardPage = () => {
       ) : (
         <>Not found</>
       )}
-      {/* <Gap></Gap>
-      <Heading>Popular campaign</Heading>
-      <CampaignGrid>
-        {Array(4)
-          .fill(0)
-          .map((item) => (
-            <CampaignItem key={v4()}></CampaignItem>
-          ))}
-      </CampaignGrid>
-      <Gap></Gap>
-      <Heading>Recent campaign</Heading>
-      <CampaignGrid>
-        {Array(4)
-          .fill(0)
-          .map((item) => (
-            <CampaignItem key={v4()}></CampaignItem>
-          ))}
-      </CampaignGrid>
-      <Gap></Gap>
-      <Heading>Table</Heading>
-      <CampaignGrid>
-        {Array(4)
-          .fill(0)
-          .map((item) => (
-            <CampaignItem key={v4()}></CampaignItem>
-          ))}
-      </CampaignGrid> */}
     </Fragment>
   );
 };
