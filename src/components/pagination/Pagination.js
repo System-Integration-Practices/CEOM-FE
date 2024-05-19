@@ -3,7 +3,12 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({ itemsPerPage, setCurrentPage, totalPages }) => {
+const Pagination = ({
+  itemsPerPage,
+  setCurrentPage,
+  totalPages,
+  currentPage,
+}) => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   //   const [itemOffset, setItemOffset] = useState(0);
@@ -44,6 +49,7 @@ const Pagination = ({ itemsPerPage, setCurrentPage, totalPages }) => {
             <FontAwesomeIcon icon={faAngleLeft} />
           </div>
         }
+        forcePage={currentPage}
         renderOnZeroPageCount={null}
         className="pagination"
       />
