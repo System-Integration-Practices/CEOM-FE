@@ -126,7 +126,7 @@ const DashboardPage = () => {
         </Heading>
         <div className=" max-w-[458px] w-full">
           <DashboardSearch
-            displayButton={false}
+            // displayButton={false}
             setPagination={setPagination}
           ></DashboardSearch>
         </div>
@@ -166,14 +166,16 @@ const DashboardPage = () => {
               >
                 <span>{"Unselect"}</span>
               </Dropdown.Option>
-              {listBenefitPlan.map((value) => (
-                <Dropdown.Option
-                  key={value.benefitPlanId}
-                  onClick={() => handleSelectDropdownBenefit(value)}
-                >
-                  <span>{value.planName.trim()}</span>
-                </Dropdown.Option>
-              ))}
+              {listBenefitPlan &&
+                listBenefitPlan.length > 0 &&
+                listBenefitPlan.map((value) => (
+                  <Dropdown.Option
+                    key={value.benefitPlanId}
+                    onClick={() => handleSelectDropdownBenefit(value)}
+                  >
+                    <span>{value.planName.trim()}</span>
+                  </Dropdown.Option>
+                ))}
             </Dropdown.List>
           </Dropdown>
         </div>

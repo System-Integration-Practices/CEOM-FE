@@ -15,7 +15,7 @@ import { authLogin } from "store/auth/auth-slice";
 import InputRadio from "components/radio/InputRadio";
 
 const schema = yup.object({
-  username: yup.string().email("").required("This field is required"),
+  username: yup.string().required("This field is required"),
   password: yup
     .string()
     .required("This field is required")
@@ -97,7 +97,7 @@ const SignInPage = () => {
                 checked={watchGender == 2}
                 // labelName="HR"
               ></InputRadio>
-              <Label htmlFor="">HR</Label>
+              <Label htmlFor="">Payroll</Label>
             </div>
             <div className="flex gap-6">
               <InputRadio
@@ -107,7 +107,7 @@ const SignInPage = () => {
                 checked={watchGender == 3}
                 // labelName="HR"
               ></InputRadio>
-              <Label htmlFor="">Payroll</Label>
+              <Label htmlFor="">HR</Label>
             </div>
           </div>
           {/* <RadioHook

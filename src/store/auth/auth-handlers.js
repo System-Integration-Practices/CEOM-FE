@@ -13,11 +13,13 @@ export default function* handleAuthRegister(action) {
   const { payload } = action;
   try {
     const response = yield call(requestAuthRegister, payload);
+    console.log("🚀 ~ function*handleAuthRegister ~ response:", response);
     if (response.status === 201) {
       toast.success("Created new account successfully");
     }
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
   }
 }
 function* handleAuthLogin({ payload }) {

@@ -13,17 +13,19 @@ import { Checkbox } from "components/checkbox";
 import { Button } from "components/button";
 import { useDispatch } from "react-redux";
 import { authRegister } from "store/auth/auth-slice";
+import InputRadio from "components/radio/InputRadio";
 
 const schema = yup.object({
-  name: yup.string().required("This field is required"),
-  email: yup
-    .string()
-    .email("Invalid email address")
-    .required("This field is required"),
+  fullname: yup.string().required("This field is required"),
+  username: yup.string().required("This field is required"),
   password: yup
     .string()
     .required("This field is required")
     .min(8, "Password must be 8 character "),
+  retype_password: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  role_id: yup.number(),
 });
 
 const SignUpPage = () => {
@@ -31,11 +33,13 @@ const SignUpPage = () => {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
+  const watchGender = watch("role_id");
   const dispatch = useDispatch();
   const handleSignUp = async (values) => {
     try {
@@ -49,6 +53,10 @@ const SignUpPage = () => {
     useToggleValue();
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
+  const {
+    value: showRetyePassword,
+    handleToggleValue: handleToggleRetypePassword,
+  } = useToggleValue();
   return (
     <LayoutAuthentication heading="SignUp">
       <p className="mb-6 text-xs font-normal text-center lg:text-sm text-text3 lg:mb-8">
@@ -62,26 +70,26 @@ const SignUpPage = () => {
         <span>Sign up with google</span>
       </button>
       <p className="mb-4 text-xs font-normal text-center lg:text-sm lg:mb-8 text-text2 dark:text-white">
-        Or sign up with email
+        Or sign up with account
       </p>
       <form onSubmit={handleSubmit(handleSignUp)}>
         <FormGroup>
-          <Label htmlFor="name">Full Name *</Label>
+          <Label htmlFor="fullname">Full Name *</Label>
           <Input
             control={control}
-            name="name"
-            placeholder="Jhon Doe"
-            error={errors.name?.message}
+            name="fullname"
+            placeholder="Kieroro"
+            error={errors.fullname?.message}
           ></Input>
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="email">Email *</Label>
+          <Label htmlFor="username">Username *</Label>
           <Input
             control={control}
-            name="email"
-            type="email"
-            placeholder="example@gmail.com"
-            error={errors.email?.message}
+            name="username"
+            type="text"
+            placeholder="kienroro2003"
+            error={errors.username?.message}
           ></Input>
         </FormGroup>
         <FormGroup>
@@ -98,6 +106,50 @@ const SignUpPage = () => {
               onClick={handleTogglePassword}
             ></IconEyeToggle>
           </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="password">Retype Password *</Label>
+          <Input
+            control={control}
+            name="retype_password"
+            type={`${showRetyePassword ? "text" : "password"}`}
+            placeholder="Retype a password"
+            error={errors.retype_password?.message}
+          >
+            <IconEyeToggle
+              open={showRetyePassword}
+              onClick={handleToggleRetypePassword}
+            ></IconEyeToggle>
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="email">Role *</Label>
+          <div className="flex items-center gap-5">
+            <div className="flex gap-6">
+              <InputRadio
+                control={control}
+                name="role_id"
+                value={2}
+                checked={watchGender == 2}
+              ></InputRadio>
+              <Label htmlFor="">Payroll</Label>
+            </div>
+            <div className="flex gap-6">
+              <InputRadio
+                control={control}
+                name="role_id"
+                value={3}
+                checked={watchGender == 3}
+              ></InputRadio>
+              <Label htmlFor="">HR</Label>
+            </div>
+          </div>
+          {/* <RadioHook
+            control={control}
+            name="gender"
+            value="male"
+            checked={watchGender === "male"}
+          ></RadioHook> */}
         </FormGroup>
         <div className="flex items-start mb-5 gap-x-5">
           <Checkbox name="term" checked={acceptTerm} onClick={handleToggleTerm}>
