@@ -73,6 +73,11 @@ export const Home = () => {
         await fetchData(0, '');
     };
 
+    const handleDataSync = async () => {
+        await HomeService.dataSync();
+        toast.success(`Đồng bộ dữ liệu thành công.`);
+    };
+
     return (
         <>
             <h1>TRANG CHỦ</h1>
@@ -80,6 +85,8 @@ export const Home = () => {
                 <NavLink to={`/create`}>
                     <button className="btn btn-success" >CREATE</button>
                 </NavLink>
+
+                <button className="btn btn-primary" onClick={() => handleDataSync()}>DATA SYNC</button>
             </div>
             <div>
                 <table class="table">

@@ -14,3 +14,12 @@ export const findAll = async (find, page) => {
         throw error;
     }
 }
+
+export const dataSync = async () => {
+    try {
+        await axios.get("http://localhost:8080/api/integration/data-synchronization");
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+}
