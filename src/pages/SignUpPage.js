@@ -14,6 +14,7 @@ import { Button } from "components/button";
 import { useDispatch } from "react-redux";
 import { authRegister } from "store/auth/auth-slice";
 import InputRadio from "components/radio/InputRadio";
+import { toast } from "react-toastify";
 
 const schema = yup.object({
   fullname: yup.string().required("This field is required"),
@@ -38,12 +39,16 @@ const SignUpPage = () => {
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
+    defaultValues: {
+      role_id: 2,
+    },
   });
   const watchGender = watch("role_id");
   const dispatch = useDispatch();
   const handleSignUp = async (values) => {
     try {
       dispatch(authRegister({ ...values, permissions: [] }));
+
       reset({});
     } catch (error) {
       console.log(error);

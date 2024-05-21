@@ -16,11 +16,17 @@ import { Dropdown } from "components/dropdown";
 import { Button } from "components/button";
 import { apiURL, imgbbAPI } from "config/config";
 import "react-quill/dist/quill.snow.css";
+import Address from "components/selectAddress/Address";
 Quill.register("modules/imageUploader", ImageUploader);
 
 const categoriesData = ["architecture", "education"];
 
 const CampaignAddNew = () => {
+  const [address, setAddress] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  const [resetAddress, setResetAddress] = useState(false);
   const { handleSubmit, control, setValue, reset, watch } = useForm();
   const getDropdownLabel = (name, defaultValue = "") => {
     const value = watch(name) || defaultValue;
@@ -104,9 +110,9 @@ const CampaignAddNew = () => {
           Start a Personal 🚀
         </h1>
         <form onSubmit={handleSubmit(handleAddNewCampaign)}>
-          <FormRow numberCol={"3"}>
+          <FormRow numberCols={3}>
             <FormGroup>
-              <Label>Campaign Title *</Label>
+              <Label>First Name *</Label>
               <Input
                 control={control}
                 name="title"
@@ -114,33 +120,129 @@ const CampaignAddNew = () => {
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label>Select a category *</Label>
+              <Label>Middle Name *</Label>
+              <Input
+                control={control}
+                name="title"
+                placeholder="Write a title"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Last Name *</Label>
+              <Input
+                control={control}
+                name="title"
+                placeholder="Write a title"
+              ></Input>
+            </FormGroup>
+          </FormRow>
+          <FormRow numberCols={3}>
+            <FormGroup>
+              <Label>Social Security Number</Label>
+              <Input
+                control={control}
+                name="title"
+                placeholder="Write a title"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Drivers License</Label>
+              <Input
+                control={control}
+                name="title"
+                placeholder="Write a title"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Zip</Label>
+              <Input
+                control={control}
+                name="title"
+                placeholder="Write a title"
+              ></Input>
+            </FormGroup>
+          </FormRow>
+          <FormRow numberCols={2}>
+            <FormGroup>
+              <Label>City</Label>
               <Dropdown>
-                <Dropdown.Select
-                  placeholder={getDropdownLabel("category", "Select category")}
-                ></Dropdown.Select>
-                <Dropdown.List>
-                  {categoriesData.map((category) => (
-                    <Dropdown.Option
-                      key={category}
-                      onClick={() =>
-                        handleSelectDropdownOption("category", category)
-                      }
-                    >
-                      <span className="capitalize">{category}</span>
-                    </Dropdown.Option>
-                  ))}
-                </Dropdown.List>
+                <Dropdown.Select placeholder="Select one"></Dropdown.Select>
+                <Dropdown.List>Hello</Dropdown.List>
               </Dropdown>
             </FormGroup>
             <FormGroup>
-              <Label>Campaign Title *</Label>
-              <Input
-                control={control}
-                name="title"
-                placeholder="Write a title"
-              ></Input>
+              <Label>Country</Label>
+              <Dropdown>
+                <Dropdown.Select
+                  placeholder={getDropdownLabel("country", "Select country")}
+                ></Dropdown.Select>
+                <Dropdown.List>
+                  <Dropdown.Search
+                    placeholder="Search country..."
+                    onChange={setFilterCountry}
+                  ></Dropdown.Search>
+                  {countries.length > 0 &&
+                    countries.map((country) => (
+                      <Dropdown.Option
+                        key={country?.name?.common}
+                        onClick={() =>
+                          handleSelectDropdownOption(
+                            "country",
+                            country?.name?.common
+                          )
+                        }
+                      >
+                        {country?.name?.common}
+                      </Dropdown.Option>
+                    ))}
+                </Dropdown.List>
+              </Dropdown>
             </FormGroup>
+          </FormRow>
+          <FormRow numberCols={3}>
+            <Address
+              setAddress={setAddress}
+              setResetAddress={setResetAddress}
+              setProvince={setProvince}
+              setDistrict={setDistrict}
+              setWard={setWard}
+            />
+          </FormRow>
+          <FormRow numberCols={1}>
+            <div className="mb-4 w-full">
+              <Label htmlFor="input_address">Địa Chỉ *</Label>
+              <textarea
+                className="block h-[100px] w-full rounded-xl py-3 pl-4 pr-10 shadow outline-none"
+                id="input_address"
+                placeholder="địa chỉ"
+                required
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+          </FormRow>
+          {/* Address2 */}
+          <FormRow numberCols={3}>
+            <Address
+              setAddress={setAddress}
+              setResetAddress={setResetAddress}
+              setProvince={setProvince}
+              setDistrict={setDistrict}
+              setWard={setWard}
+            />
+          </FormRow>
+          <FormRow numberCols={1}>
+            <div className="mb-4 w-full">
+              <Label htmlFor="input_address">Địa Chỉ *</Label>
+              <textarea
+                className="block h-[100px] w-full rounded-xl py-3 pl-4 pr-10 shadow outline-none"
+                id="input_address"
+                placeholder="địa chỉ"
+                required
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
           </FormRow>
           <FormGroup>
             <Label>Short Description *</Label>
@@ -209,7 +311,53 @@ const CampaignAddNew = () => {
               </p>
             </FormGroup>
           </FormRow>
-          <FormRow>
+          <FormRow numberCols={3}>
+            <FormGroup>
+              <Label>Start Date</Label>
+
+              <DatePicker
+                onChange={setStartDate}
+                value={startDate}
+                format="dd-MM-yyyy"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Campaign End Method</Label>
+              <Dropdown>
+                <Dropdown.Select placeholder="Select one"></Dropdown.Select>
+                <Dropdown.List>Hello</Dropdown.List>
+              </Dropdown>
+            </FormGroup>
+            <FormGroup>
+              <Label>Country</Label>
+              <Dropdown>
+                <Dropdown.Select
+                  placeholder={getDropdownLabel("country", "Select country")}
+                ></Dropdown.Select>
+                <Dropdown.List>
+                  <Dropdown.Search
+                    placeholder="Search country..."
+                    onChange={setFilterCountry}
+                  ></Dropdown.Search>
+                  {countries.length > 0 &&
+                    countries.map((country) => (
+                      <Dropdown.Option
+                        key={country?.name?.common}
+                        onClick={() =>
+                          handleSelectDropdownOption(
+                            "country",
+                            country?.name?.common
+                          )
+                        }
+                      >
+                        {country?.name?.common}
+                      </Dropdown.Option>
+                    ))}
+                </Dropdown.List>
+              </Dropdown>
+            </FormGroup>
+          </FormRow>
+          <FormRow numberCols={2}>
             <FormGroup>
               <Label>Campaign End Method</Label>
               <Dropdown>

@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { formatValue } from "react-currency-input-field";
 import { v4 } from "uuid";
 
+const listItemsPerPage = [5, 10, 15, 20];
+
 const formatCurrency = (money) => {
   return formatValue({
     value: "" + money,
@@ -18,8 +20,6 @@ const formatCurrency = (money) => {
     suffix: "₫",
   });
 };
-
-const listItemsPerPage = [5, 10, 15, 20];
 
 const DashboardPage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -66,9 +66,6 @@ const DashboardPage = () => {
   };
   useEffect(() => {
     async function fetchPersonals() {
-      console.log(
-        `/personal_integration?fullName=${pagination.query}&benefitPlanId=${search.benefitPlan}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
-      );
       try {
         const response = await axiosPrivate.get(
           `/personal_integration?fullName=${pagination.query}&benefitPlanId=${search.benefitPlan}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
@@ -90,8 +87,8 @@ const DashboardPage = () => {
                 item.middleInitial,
                 item.lastName,
               ].join(" "),
-              gender: item.gender,
-              payAmount: item.payAmount,
+              gender: item.gender ? "Male" : "Female",
+              payAmount: formatCurrency(item.payAmount),
               planName: item.planName,
             };
           })

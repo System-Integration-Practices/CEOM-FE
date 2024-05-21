@@ -9,6 +9,7 @@ import { authLogOut } from "store/auth/auth-slice";
 
 const DashboardTopbar = () => {
   const { user } = useSelector((state) => state.auth);
+  console.log("🚀 ~ DashboardTopbar ~ user:", user);
   return (
     <div className="flex items-center justify-between mb-8">
       <div className="flex items-center flex-1 gap-x-10">
@@ -20,14 +21,18 @@ const DashboardTopbar = () => {
         </div> */}
       </div>
       <div className="flex items-center justify-end flex-1 gap-x-10">
-        <Button
-          className="px-7"
-          type="button"
-          href="/start-campaign"
-          kind="secondary"
-        >
-          Start a campaign
-        </Button>
+        {user && user?.role?.name === "ADMIN" ? (
+          <Button
+            className="px-7"
+            type="button"
+            href="/start-campaign"
+            kind="secondary"
+          >
+            Start a personal
+          </Button>
+        ) : (
+          <></>
+        )}
         <div className="flex items-center gap-3">
           {!user && !user?.fullname ? (
             <>

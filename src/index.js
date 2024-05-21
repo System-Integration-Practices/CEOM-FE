@@ -26,10 +26,6 @@ const router = createBrowserRouter([
     element: <LayoutDashboard></LayoutDashboard>,
     children: [
       {
-        path: "/",
-        element: <DashboardPage></DashboardPage>,
-      },
-      {
         path: "/campaign",
         element: <CampaignPage></CampaignPage>,
       },
@@ -47,11 +43,13 @@ const router = createBrowserRouter([
       },
       {
         element: (
-          <RequiredAuthPage
-            allowPermissions={["USER", "ADMIN"]}
-          ></RequiredAuthPage>
+          <RequiredAuthPage allowPermissions={["ADMIN"]}></RequiredAuthPage>
         ),
         children: [
+          {
+            path: "/",
+            element: <DashboardPage></DashboardPage>,
+          },
           {
             path: "/start-campaign",
             element: <StartCampaignPage></StartCampaignPage>,

@@ -80,24 +80,6 @@ const TableAutoGenerate = ({ listData, pagination, setPagination }) => {
                       </td>
                     );
                   }
-                  if (user?.payAmount && user.payAmount === value) {
-                    return (
-                      <td className="py-3 pl-3 rounded-l-xl">
-                        <span>{formatCurrency(user.payAmount)}</span>
-                      </td>
-                    );
-                  }
-
-                  if (
-                    user?.gender.toString() &&
-                    user?.gender.toString() === value.toString()
-                  ) {
-                    return (
-                      <td className="py-3 pl-3 rounded-l-xl">
-                        <span>{value ? "Male" : "Female"}</span>
-                      </td>
-                    );
-                  }
                   return (
                     <td className="py-3 pl-3 rounded-l-xl">
                       <span>{value}</span>

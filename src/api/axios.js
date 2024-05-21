@@ -14,3 +14,12 @@ export const axiosPrivate = axios.create({
     // "Cache-Control": "no-cache",
   },
 });
+
+const instanceAddress = axios.create({
+  baseURL: "https://vapi.vnappmob.com/api/",
+});
+// Method address
+export const getAddress = async (endPoints, option = {}) => {
+  const response = await instanceAddress.get(endPoints, option);
+  return response;
+};

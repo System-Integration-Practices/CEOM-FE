@@ -11,6 +11,7 @@ const Input = (props) => {
     name,
     type = "text",
     error = "",
+
     placeholder = "",
     children,
     ...rest
