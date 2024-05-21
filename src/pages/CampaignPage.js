@@ -1,75 +1,198 @@
-import { Button } from "components/button";
+import Gap from "components/common/Gap";
 import Heading from "components/common/Heading";
-import LayoutDashboard from "layout/LayoutDashboard";
-import CampaignFeature from "modules/campaign/CampaignFeature";
-import CampaignGrid from "modules/campaign/CampaignGrid";
-import React, { Fragment } from "react";
+import { Dropdown } from "components/dropdown";
+import Pagination from "components/pagination/Pagination";
+import TableAutoGenerate from "components/tables/TableAutoGenerate";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+import DashboardSearch from "modules/dashboard/DashboardSearch";
+import React, { Fragment, useState } from "react";
+import { useEffect } from "react";
+import { formatValue } from "react-currency-input-field";
+import { v4 } from "uuid";
+
+const listItemsPerPage = [5, 10, 15, 20];
 
 const CampaignPage = () => {
+  const axiosPrivate = useAxiosPrivate();
+  const [month, setMonth] = useState(5);
+  const [listAlertBirthday, setListAlertBirthday] = useState([]);
+  const [listBenefitPlan, setListBenefitPlan] = useState([]);
+  const [pagination, setPagination] = useState({
+    totalPages: 0,
+    currentPage: 0,
+    itemsPerPage: 10,
+    query: "",
+  });
+
+  const [search, setSearch] = useState({
+    benefitPlan: "",
+    labelBenefit: "",
+  });
+
+  const handleSelectDropdownOption = (value) => {
+    setPagination((item) => {
+      return { ...item, itemsPerPage: value, currentPage: 0 };
+    });
+  };
+
+  const handleSelectDropdownBenefit = (value) => {
+    setMonth(value);
+    setPagination((item) => {
+      return { ...item, currentPage: 0 };
+    });
+  };
+  useEffect(() => {
+    async function fetchBirthdays() {
+      console.log(
+        `/personal_integration/birthday?fullName=${pagination.query}&month=${month}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
+      );
+      try {
+        const response = await axiosPrivate.get(
+          `/personal_integration/birthday?fullName=${pagination.query}&month=${month}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
+        );
+        console.log("🚀 ~ fetchBirthdays ~ response:", response);
+
+        setPagination((item) => {
+          return {
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+            itemsPerPage: item.itemsPerPage,
+            query: item.query,
+          };
+        });
+        setListAlertBirthday(
+          response.data.personals.map((item) => {
+            return {
+              personalId: item.personalId,
+              fullName: [
+                item.firstName,
+                item.middleInitial,
+                item.lastName,
+              ].join(" "),
+              countDayToBirthday: `${item.countDayToBirthday} ngày sẽ đến sinh nhật`,
+              birthday: `${new Date(item.birthday).getDate()}-${
+                new Date(item.birthday).getMonth() + 1
+              }-${new Date(item.birthday).getFullYear()}`,
+            };
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // async function fetchPersonals() {
+    //   try {
+    //     const response = await axiosPrivate.get(
+    //       `/personal_integration?fullName=${pagination.query}&benefitPlanId=${search.benefitPlan}&page=${pagination.currentPage}&limit=${pagination.itemsPerPage}`
+    //     );
+    //     setPagination((item) => {
+    //       return {
+    //         totalPages: response.data.totalPages,
+    //         currentPage: response.data.currentPage,
+    //         itemsPerPage: item.itemsPerPage,
+    //         query: item.query,
+    //       };
+    //     });
+    //     setListPersonalOverview(
+    //       response.data.personals.map((item) => {
+    //         return {
+    //           personalId: item.personalId,
+    //           fullName: [
+    //             item.firstName,
+    //             item.middleInitial,
+    //             item.lastName,
+    //           ].join(" "),
+    //           gender: item.gender ? "Male" : "Female",
+    //           payAmount: formatCurrency(item.payAmount),
+    //           planName: item.planName,
+    //         };
+    //       })
+    //     );
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+    async function fetchBenefitPlans() {
+      try {
+        const response = await axiosPrivate.get(`/benefit_plans`);
+        setListBenefitPlan(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchBirthdays();
+    // fetchPersonals();
+    fetchBenefitPlans();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    pagination.currentPage,
+    pagination.query,
+    pagination.itemsPerPage,
+    month,
+  ]);
   return (
     <Fragment>
-      <div className="flex items-center justify-between px-10 py-8 mb-10 bg-white rounded-3xl">
-        <div className="flex items-start gap-x-6">
-          <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-secondary bg-opacity-60">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <h1 className="text-[22px] font-semibold mb-2">
-              Create Your Campaign
-            </h1>
-            <p className="mb-2 text-sm text-text3">
-              Jump right into our editor and create your first Virtue campaign!
-            </p>
-            <a href="/" className="text-sm text-primary">
-              Need any help? Learn More...
-            </a>
-          </div>
+      <div className="flex items-center justify-between mb-2">
+        <Heading number={4} className="mb-0">
+          Your personals
+        </Heading>
+        <div className=" max-w-[458px] w-full">
+          <DashboardSearch
+            // displayButton={false}
+            setPagination={setPagination}
+          ></DashboardSearch>
         </div>
-        <Button
-          type="button"
-          kind="ghost"
-          className="px-8"
-          href="/start-campaign"
-        >
-          Create campaign
-        </Button>
       </div>
-      <Heading number={4}>Your campaign</Heading>
-      <CampaignGrid type="secondary">
-        <CampaignFeature></CampaignFeature>
-        <CampaignFeature></CampaignFeature>
-        <CampaignFeature></CampaignFeature>
-        <CampaignFeature></CampaignFeature>
-      </CampaignGrid>
-      <div className="mt-10 text-center"></div>
-      <Button kind="ghost" className="px-8 mx-auto">
-        <span>See more</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Button>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-3 ">
+          <span>Show</span>
+          <Dropdown>
+            <Dropdown.Select
+              placeholder={pagination.itemsPerPage}
+              className="gap-2"
+            ></Dropdown.Select>
+            <Dropdown.List>
+              {listItemsPerPage.map((value) => (
+                <Dropdown.Option
+                  key={value}
+                  onClick={() => handleSelectDropdownOption(value)}
+                >
+                  <span>{value}</span>
+                </Dropdown.Option>
+              ))}
+            </Dropdown.List>
+          </Dropdown>
+          <span>entries</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-full">Month</div>
+          <Dropdown className="w-[200px]">
+            <Dropdown.Select
+              placeholder={`Tháng ${month}` || "Month"}
+              className="gap-2 w-[200px]"
+            ></Dropdown.Select>
+            <Dropdown.List>
+              {new Array(12).fill(0).map((value, index) => (
+                <Dropdown.Option
+                  key={value.benefitPlanId}
+                  onClick={() => handleSelectDropdownBenefit(index + 1)}
+                >
+                  <span>Tháng {index + 1}</span>
+                </Dropdown.Option>
+              ))}
+            </Dropdown.List>
+          </Dropdown>
+        </div>
+      </div>
+      {listAlertBirthday && listAlertBirthday.length > 0 ? (
+        <TableAutoGenerate
+          listData={listAlertBirthday}
+          pagination={pagination}
+          setPagination={setPagination}
+        ></TableAutoGenerate>
+      ) : (
+        <>Not found</>
+      )}
     </Fragment>
   );
 };

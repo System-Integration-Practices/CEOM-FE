@@ -90,6 +90,7 @@ const DashboardPage = () => {
               gender: item.gender ? "Male" : "Female",
               payAmount: formatCurrency(item.payAmount),
               planName: item.planName,
+              payRateName: item.payRateName,
             };
           })
         );
@@ -118,9 +119,7 @@ const DashboardPage = () => {
   return (
     <Fragment>
       <div className="flex items-center justify-between mb-2">
-        <Heading number={4} className="mb-0">
-          Your personals
-        </Heading>
+        <Heading className="mb-0">Your personals</Heading>
         <div className=" max-w-[458px] w-full">
           <DashboardSearch
             // displayButton={false}

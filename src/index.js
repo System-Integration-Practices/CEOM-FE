@@ -20,26 +20,48 @@ const StartCampaignPage = lazy(() => import("./pages/StartCampaignPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage"));
 const WithdrawPage = lazy(() => import("./pages/WithdrawPage"));
 const UnauthorizePage = lazy(() => import("./pages/UnauthorizePage"));
+const AddNewEmployeePage = lazy(() => import("./pages/AddNewEmployeePage"));
 const container = document.getElementById("root");
 const router = createBrowserRouter([
   {
     element: <LayoutDashboard></LayoutDashboard>,
     children: [
       {
-        path: "/campaign",
-        element: <CampaignPage></CampaignPage>,
-      },
-      {
         path: "/payment",
         element: <PaymentPage></PaymentPage>,
       },
-      {
-        path: "/withdraw",
-        element: <WithdrawPage></WithdrawPage>,
-      },
+
       {
         path: "/unauthorize",
         element: <UnauthorizePage></UnauthorizePage>,
+      },
+      {
+        element: (
+          <RequiredAuthPage allowPermissions={["PAYROLL"]}></RequiredAuthPage>
+        ),
+        children: [
+          {
+            path: "/withdraw",
+            element: <WithdrawPage></WithdrawPage>,
+          },
+          {
+            path: "/add-employee",
+            element: <AddNewEmployeePage></AddNewEmployeePage>,
+          },
+        ],
+      },
+      {
+        element: (
+          <RequiredAuthPage
+            allowPermissions={["ADMIN", "HR", "PAYROLL"]}
+          ></RequiredAuthPage>
+        ),
+        children: [
+          {
+            path: "/",
+            element: <DashboardPage></DashboardPage>,
+          },
+        ],
       },
       {
         element: (
@@ -53,6 +75,10 @@ const router = createBrowserRouter([
           {
             path: "/start-campaign",
             element: <StartCampaignPage></StartCampaignPage>,
+          },
+          {
+            path: "/campaign",
+            element: <CampaignPage></CampaignPage>,
           },
           {
             path: "/campaign-id",

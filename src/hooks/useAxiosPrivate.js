@@ -7,7 +7,6 @@ export default function useAxiosPrivate() {
   const refresh = useRefreshToken();
   const { auth } = useSelector((state) => state);
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ auth.accessToken:", auth.accessToken);
     const requestInterceptor = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {

@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const RequiredAuthPage = ({ allowPermissions = [] }) => {
   const { user } = useSelector((state) => state.auth);
-  console.log("🚀 ~ RequiredAuthPage ~ user:", user);
+
   const userPermissions = user?.role?.name;
   const location = useLocation();
   if (!user) {
